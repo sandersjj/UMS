@@ -1,0 +1,21 @@
+<h1>Register</h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('register'));
+
+//This function ensures that the name of each element is correctly nested
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('firstname'));
+echo $this->formRow($form->get('surname'));
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('password'));
+echo $this->formRow($form->get('question'));
+echo $this->formRow($form->get('answer'));
+
+
+echo $this->formRow($form->get('submit'));
+echo $this->form()->closeTag($form);
+

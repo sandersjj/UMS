@@ -1,0 +1,29 @@
+<h3>All users</h3>
+
+<table>
+    <tr>
+        <th>id</th>
+        <th>Firstname</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    
+    <?php foreach ($users as $user): ?>
+        <?php $url = $this->url('profile', array('id' => $user->getId())); ?>
+        <tr>
+            <td><?php echo $user->getId(); ?><td>
+            <td><?php echo $user->getFirstname(); ?><td>
+            <td><?php echo $user->getSurname(); ?><td>
+            <td><?php echo $user->getEmail(); ?><td>
+            <td><a href="<?php echo $url; ?>">Edit</a><td>
+            <td>Delete<td>
+        </tr>
+    <?php endforeach; ?>
+
+
+
+
+
+</table>

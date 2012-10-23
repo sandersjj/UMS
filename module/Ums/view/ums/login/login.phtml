@@ -1,0 +1,19 @@
+<h1>Login</h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('login'));
+
+//This function ensures that the name of each element is correctly nested
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('password'));
+echo $this->formRow($form->get('cookie'));
+echo $this->formRow($form->get('submit'));
+echo $this->form()->closeTag($form);
+
+?>
+
+<span>In case you lost your Password. Please click <a href="<?php echo $this->url('recover'); ?>"> here</a> to recover.</span>
