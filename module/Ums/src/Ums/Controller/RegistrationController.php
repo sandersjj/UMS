@@ -13,6 +13,12 @@ use Ums\Form\RegistrationFilter as RegistrationFilter;
 Class RegistrationController extends AbstractUmsController {
 
     public function registerAction() {
+        
+         if ($this->UmsUserAuthentication()->hasIdentity() ) {
+            $this->flashMessenger()->addMessage('You don\'t need to register, you have already an account since you\'re logged in. Logout to create a new account.' );
+            $this->redirect()->toRoute('home');
+            
+        }
 
 
         $form = new RegistrationForm;
@@ -27,6 +33,7 @@ Class RegistrationController extends AbstractUmsController {
          */
 //        $classes = array(
 //            $em->getClassMetadata('Ums\Entity\User'),
+//            $em->getClassMetadata('Ums\Entity\Memo'),
 //        );
 //
 //        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);

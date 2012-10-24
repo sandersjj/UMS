@@ -9,3 +9,13 @@
     <dt>Email<dt>
     <dd><?php echo $profile->getEmail();?></dd>
 </dl>
+
+<?php if ($this->umsAuthentication() !== false && $this->umsAuthentication()->getIs_admin()== 1): ?> 
+                    
+
+<h4>Notities</h4>
+<a href="">Add note</a>
+
+
+
+<?php endif ?>

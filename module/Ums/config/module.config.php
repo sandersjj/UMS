@@ -7,6 +7,7 @@ return array(
             'Ums\Controller\Login' => 'Ums\Controller\LoginController',
             'Ums\Controller\Recover' => 'Ums\Controller\RecoverController',
             'Ums\Controller\Profile' => 'Ums\Controller\ProfileController',
+            'Ums\Controller\Profile' => 'Ums\Controller\MemoController',
         ),
     ),
     'controller_plugins' => array(
@@ -83,6 +84,16 @@ return array(
                     'defaults' => array(
                         'controller' => 'Ums\Controller\Profile',
                         'action' => 'list',
+                    )
+                ),
+            ),
+            'memo' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => 'note/add',
+                    'defaults' => array(
+                        'controller' => 'Ums\Controller\Memo',
+                        'action' => 'add'
                     )
                 ),
             ),
