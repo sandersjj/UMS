@@ -58,7 +58,7 @@ class User {
 
     /**
      * 
-     *  @ORM\OneToMany(targetEntity="Memo", mappedBy="User")
+     *  @ORM\OneToMany(targetEntity="Memo", mappedBy="user", cascade={"persist"})
      */
     protected $memos;
 

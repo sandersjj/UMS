@@ -24,7 +24,7 @@ class User extends EntityRepository {
         $model->setPassword(User::sha1 . $data['password']);
         $model->setQuestion($data['question']);
         $model->setAnswer($data['answer']);
-        $model->setActivation_hash(md5(date(D) . rand()));
+        $model->setActivation_hash(md5(date(d) . rand()));
 
         $em->persist($model);
         $em->flush();

@@ -27,9 +27,9 @@ class Memo {
     
      /**
      * @ORM\ManyToOne(targetEntity="User")
-     * #ORM\JoinColumn(name="user_is", referencedColumnName="id")
+     * #ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $users;
+    protected $user;
     
    
      
@@ -58,6 +58,14 @@ class Memo {
         $this->users->add($user);
         $user->addUserMemo($this);
     }
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function setUser($user) {
+        $this->user = $user;
+    }
+
 
 
 
