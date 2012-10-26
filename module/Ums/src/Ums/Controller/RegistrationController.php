@@ -9,15 +9,15 @@ use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
 use Ums\Form\Registration as RegistrationForm;
 use Ums\Form\RegistrationFilter as RegistrationFilter;
+use Doctrine\ORM\Tools\SchemaValidator;
 
 Class RegistrationController extends AbstractUmsController {
 
     public function registerAction() {
-        
-         if ($this->UmsUserAuthentication()->hasIdentity() ) {
-            $this->flashMessenger()->addMessage('You don\'t need to register, you have already an account since you\'re logged in. Logout to create a new account.' );
+
+        if ($this->UmsUserAuthentication()->hasIdentity()) {
+            $this->flashMessenger()->addMessage('You don\'t need to register, you have already an account since you\'re logged in. Logout to create a new account.');
             $this->redirect()->toRoute('home');
-            
         }
 
 
@@ -25,25 +25,33 @@ Class RegistrationController extends AbstractUmsController {
         $form->setInputFilter(new RegistrationFilter());
 
         $em = $this->getEntityManager();
+        
+        
+        $validator = new SchemaValidator($em);
+        $errors = $validator->validateMapping();
 
-
-
+        if (count($errors) > 0) {
+            // Lots of errors!
+            echo implode("\n\n", $errors);
+        }
+        exit;
         /**
          * gedurende ontwikkeling wordt deze tabel steeds opnieuw aangemaakt
          */
-//        $classes = array(
-//            $em->getClassMetadata('Ums\Entity\User'),
-//            $em->getClassMetadata('Ums\Entity\Memo'),
-//        );
-//
-//        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-//
-//        try {
-//            $tool->dropSchema($classes);
-//        } catch (Exception $e) {
-//            print $e->getMessage();
-//        }
-//        $tool->createSchema($classes);
+        $classes = array(
+            $em->getClassMetadata('Ums\Entity\User'),
+            $em->getClassMetadata('Ums\Entity\Memo'),
+        );
+
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+
+        try {
+            $tool->dropSchema($classes);
+        } catch (Exception $e) {
+            print $e->getMessage();
+        }
+
+        $tool->createSchema($classes);
         /**
          * gedurende ontwikkeling wordt deze tabel steeds opnieuw aangemaakt
          */
@@ -75,9 +83,7 @@ Class RegistrationController extends AbstractUmsController {
         if ($result) {
             $this->flashMessenger()->addMessage('Your account has been activated, you may login');
             $this->redirect()->toRoute('home');
-            
         }
-   
     }
 
     private function sendConfirmationMail($model) {
@@ -109,8 +115,8 @@ Class RegistrationController extends AbstractUmsController {
                     'port' => 587, // Notice port change for TLS is 587
                     'connection_class' => 'plain',
                     'connection_config' => array(
-                        'username' => 'jigalroecha@gmail.com',
-                        'password' => 'T0rendruk',
+                        'username' => 'xxxxx',
+                        'password' => 'xxxxx',
                         'ssl' => 'tls',
                     ),
                 ));

@@ -14,14 +14,15 @@ class ProfileController extends AbstractUmsController {
 
         $em = $this->getEntityManager();
         $repo = $em->getRepository('Ums\Entity\User');
-
+        
         $id = $this->params()->fromRoute('id');
-
+        
         if (!empty($id)) {
             return new ViewModel(array(
                         'profile' => $repo->getUserById($this->params()->fromRoute('id')),
                     ));
         }
+
 
         if ($this->UmsUserAuthentication()->hasIdentity() && !isset($id)) {
             $identity = $this->UmsUserAuthentication()->getIdentity();

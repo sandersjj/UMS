@@ -1,0 +1,25 @@
+<h3>Password recovery</h3>
+
+
+
+<span><?php echo $this->question; ?></span>
+
+
+<?php
+$form = $this->form;
+if (isset($form) && !empty($form)) {
+
+
+    echo "Please answer the answer to this question";
+    $form->setAttribute('action', $this->url('question'));
+
+//This function ensures that the name of each element is correctly nested
+    $form->prepare();
+
+    echo $this->form()->openTag($form);
+    echo $this->formRow($form->get('answer'));
+    echo $this->formRow($form->get('user'));
+    echo $this->formRow($form->get('submit'));
+    echo $this->form()->closeTag($form);
+}
+?>

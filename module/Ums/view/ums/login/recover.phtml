@@ -1,0 +1,20 @@
+<h3>Password recovery</h3>
+
+
+Please enter your email adress and we will look up your security question
+
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('recover'));
+
+//This function ensures that the name of each element is correctly nested
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('submit'));
+echo $this->form()->closeTag($form);
+
+?>
+

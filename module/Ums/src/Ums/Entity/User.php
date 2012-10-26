@@ -3,6 +3,7 @@
 namespace Ums\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *
@@ -56,20 +57,17 @@ class User {
     protected $answer;
 
     /**
-     *  @ORM\ManyToMany(targetEntity="Memo")
-     *  @ORM\JoinTable(name="users_memos", 
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="memo_id",referencedColumnName="id")} 
-     *  )
+     * 
+     *  @ORM\OneToMany(targetEntity="Memo", mappedBy="User")
      */
-    protected $memo = null;
+    protected $memos;
 
     /**
      *
      * @ORM\Column(type="integer", length=1)  
      */
     protected $blocked = 0;
-    
+
     /**
      *
      * @ORM\Column(type="integer", length=1)  
@@ -81,12 +79,16 @@ class User {
      * @ORM\Column(nullable=true)  
      */
     protected $activation_hash = null;
-    
+
     /**
      *
      * @ORM\Column(type="integer", length=1)  
      */
     protected $is_admin = 0;
+
+    public function __construct() {
+        $this->memos = new ArrayCollection();
+    }
 
     public function getId() {
         return $this->id;
@@ -144,14 +146,6 @@ class User {
         $this->answer = $answer;
     }
 
-    public function getMemo() {
-        return $this->memo;
-    }
-
-    public function setMemo($memo) {
-        $this->memo = $memo;
-    }
-
     public function getBlocked() {
         return $this->blocked;
     }
@@ -167,6 +161,7 @@ class User {
     public function setActivation_hash($activation_hash) {
         $this->activation_hash = $activation_hash;
     }
+
     public function getActivated() {
         return $this->activated;
     }
@@ -174,7 +169,7 @@ class User {
     public function setActivated($activated) {
         $this->activated = $activated;
     }
-    
+
     public function getIs_admin() {
         return $this->is_admin;
     }
@@ -183,8 +178,15 @@ class User {
         $this->is_admin = $is_admin;
     }
 
+    public function getMemo() {
+        return $this->memo;
+    }
 
-    
-
+    public function addMemo($memo) {
+        if (!$this->memos->contains($memo)) {
+            $this->memos->add($memo);
+            $memo->setUser($this);
+        }
+    }
 
 }

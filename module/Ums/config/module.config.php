@@ -5,9 +5,8 @@ return array(
         'invokables' => array(
             'Ums\Controller\Registration' => 'Ums\Controller\RegistrationController',
             'Ums\Controller\Login' => 'Ums\Controller\LoginController',
-            'Ums\Controller\Recover' => 'Ums\Controller\RecoverController',
             'Ums\Controller\Profile' => 'Ums\Controller\ProfileController',
-            'Ums\Controller\Profile' => 'Ums\Controller\MemoController',
+            'Ums\Controller\Memo' => 'Ums\Controller\MemoController',
         ),
     ),
     'controller_plugins' => array(
@@ -52,7 +51,7 @@ return array(
                 'options' => array(
                     'route' => '/recover',
                     'defaults' => array(
-                        'controller' => 'Ums\Controller\Recover',
+                        'controller' => 'Ums\Controller\Login',
                         'action' => 'recover',
                     )
                 ),
@@ -87,14 +86,24 @@ return array(
                     )
                 ),
             ),
+            'question' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/question[/:id][/:email][/:question]',
+                    'defaults' => array(
+                        'controller' => 'Ums\Controller\Login',
+                        'action' => 'question',
+                    )
+                ),
+            ),
             'memo' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => 'note/add',
+                    'route' => '/note/add[/:id]',
                     'defaults' => array(
                         'controller' => 'Ums\Controller\Memo',
                         'action' => 'add'
-                    )
+                    ),
                 ),
             ),
         ),
@@ -114,7 +123,7 @@ return array(
             'ums_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array('Ums/Entity')
+                'paths' => array('Ums\Entity')
             ),
         ),
         'authentication' => array(

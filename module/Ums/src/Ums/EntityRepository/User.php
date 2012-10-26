@@ -44,9 +44,13 @@ class User extends EntityRepository {
         ));
     }
 
-        
+    /**
+     * Function checks wether the password key is valid
+     * @param type $email
+     * @param type $key
+     * @return boolean
+     */
     public function checkVerification($email, $key) {
-
 
         $result = $this->findOneBy(array(
             'email' => $email,
@@ -67,6 +71,31 @@ class User extends EntityRepository {
         return $this->findAll();
     }
     
+    /**
+     * function retrieves the user by the email addrss
+     * @param type $email
+     * @return type
+     */
+    public function getUserByEmail($email){
+        return $this->findOneBy(array('email' =>$email));
+    }
+    
+    /**
+     * This function rests the user password
+     * @param Ums\Entity\User $user
+     * @return boolean
+     */
+    public function resetUserPassword($user){
+        
+        $em = $this->getEntityManager();
+        $password = $this->createRandomPassword();
+        $user->setPassword(User::sha1 . $password);
+        $em->merge($user);
+        $em->flush();
+         
+        return $password;
+    }
+    
 
     /**
      * This function sets the account to active. This is required in order to 
@@ -83,8 +112,23 @@ class User extends EntityRepository {
         return true;
     }
 
-    
-    
+    /**
+     * 
+     * @param type $data add a memo to a user
+     */
+    public function addMemo($data){
+        $em = $this->getEntityManager();
+        
+        $user = $this->findOneBy(array('id' => $data->user));
+        
+        $memo = new \Ums\Entity\Memo();
+        $memo->setMemo($data->memo);
+        
+        $user->addMemo($memo);
+        $em->persist($user);
+        $em->flush();
+        
+    }
     
     
     /**
@@ -95,9 +139,9 @@ class User extends EntityRepository {
      * @return boolean
      */
     static function hashPassword($user, $givenPassword) {
-
+        
         $password = sha1(User::sha1 . $givenPassword);
-
+        
         if ($password == $user->getPassword()
                 && $user->getActivated() == 1
                 && $user->getBlocked() == 0) {
@@ -106,5 +150,27 @@ class User extends EntityRepository {
 
         return false;
     }
+    
+    /**
+     * This function creates a random password
+     * @return string
+     */
+    private function createRandomPassword() { 
+
+    $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+    srand((double)microtime()*1000000); 
+    $i = 0; 
+    $pass = '' ; 
+
+    while ($i <= 7) { 
+        $num = rand() % 33; 
+        $tmp = substr($chars, $num, 1); 
+        $pass = $pass . $tmp; 
+        $i++; 
+    } 
+
+    return $pass; 
+
+} 
 
 }

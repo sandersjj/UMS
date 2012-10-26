@@ -3,6 +3,7 @@
 namespace Ums\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  *
  * @ORM\Entity(repositoryClass="Ums\EntityRepository\User")
@@ -24,6 +25,15 @@ class Memo {
      */
     protected $memo;
     
+     /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * #ORM\JoinColumn(name="user_is", referencedColumnName="id")
+     */
+    protected $users;
+    
+   
+     
+    
     public function getId() {
         return $this->id;
     }
@@ -38,6 +48,15 @@ class Memo {
 
     public function setMemo($memo) {
         $this->memo = $memo;
+    }
+    
+    public function addMemo(User $user){
+        if ($this->users->contains($user)) {
+            return;
+        }
+
+        $this->users->add($user);
+        $user->addUserMemo($this);
     }
 
 

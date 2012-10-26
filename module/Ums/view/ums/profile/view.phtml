@@ -11,10 +11,10 @@
 </dl>
 
 <?php if ($this->umsAuthentication() !== false && $this->umsAuthentication()->getIs_admin()== 1): ?> 
-                    
+<?php $url = $this->url('memo', array('id' => $this->umsAuthentication()->getId())); ?>
 
 <h4>Notities</h4>
-<a href="">Add note</a>
+<a href="<?php echo $url;?>">Add note</a>
 
 
 
