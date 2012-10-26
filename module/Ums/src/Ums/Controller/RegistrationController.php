@@ -27,31 +27,31 @@ Class RegistrationController extends AbstractUmsController {
         $em = $this->getEntityManager();
         
         
-        $validator = new SchemaValidator($em);
-        $errors = $validator->validateMapping();
-
-        if (count($errors) > 0) {
-            // Lots of errors!
-            echo implode("\n\n", $errors);
-        }
-        exit;
+//        $validator = new SchemaValidator($em);
+//        $errors = $validator->validateMapping();
+//
+//        if (count($errors) > 0) {
+//            // Lots of errors!
+//            echo implode("\n\n", $errors);
+//        }
+//        exit;
         /**
          * gedurende ontwikkeling wordt deze tabel steeds opnieuw aangemaakt
          */
-        $classes = array(
-            $em->getClassMetadata('Ums\Entity\User'),
-            $em->getClassMetadata('Ums\Entity\Memo'),
-        );
-
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-
-        try {
-            $tool->dropSchema($classes);
-        } catch (Exception $e) {
-            print $e->getMessage();
-        }
-
-        $tool->createSchema($classes);
+//        $classes = array(
+//            $em->getClassMetadata('Ums\Entity\User'),
+//            $em->getClassMetadata('Ums\Entity\Memo'),
+//        );
+//
+//        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+//
+//        try {
+//            $tool->dropSchema($classes);
+//        } catch (Exception $e) {
+//            print $e->getMessage();
+//        }
+//
+//        $tool->createSchema($classes);
         /**
          * gedurende ontwikkeling wordt deze tabel steeds opnieuw aangemaakt
          */
