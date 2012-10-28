@@ -16,6 +16,11 @@
 <h4>Notities</h4>
 <a href="<?php echo $url;?>">Add note</a>
 
+<?php foreach($profile->getMemos() as $memo) : ?>
+<br>
+<?php echo $memo->getMemo() ?>
+<hr/>
+<?php endforeach ?>
 
 
 <?php endif ?>

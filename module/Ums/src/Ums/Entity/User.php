@@ -188,5 +188,9 @@ class User {
             $memo->setUser($this);
         }
     }
+    
+    public function getMemos(){
+        return $this->memos->getValues();
+    }
 
 }
